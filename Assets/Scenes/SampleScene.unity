@@ -1858,7 +1858,7 @@ MonoBehaviour:
   rb: {fileID: 0}
   head: {fileID: 404775341}
   speed: 10
-  jumpspeed: 7.5
+  jumpspeed: 75
   Xsensitive: 1.5
   Ysensitive: 1
   wallrunspeed: 25
@@ -5123,9 +5123,9 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 256
-  wallRunForce: 200
+  wallRunForce: 50
   wallClimbSpeed: 2
-  maxWallRunTime: 2
+  maxWallRunTime: 1.4
   upwardsRunKey: 304
   downwardsRunKey: 306
   wallCheckDistance: 0.7
