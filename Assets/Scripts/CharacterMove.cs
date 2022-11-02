@@ -7,11 +7,12 @@ public class CharacterMove : MonoBehaviour
 {   
     public Rigidbody rb;
     public Transform head;
-    public int speed = 10;
+    public float speed = 10;
     public float jumpspeed = 30;
     public float Xsensitive = 1.5f;
     public float Ysensitive = 1f;
-
+    public float wallrunspeed = 10f;
+    public bool wallrunning;
     Vector3 newvelocity;
     public bool isGround = true;
     public bool isJumping = false;
@@ -28,7 +29,8 @@ public class CharacterMove : MonoBehaviour
     {
         transform.Rotate(Vector3.up * Input.GetAxis("Mouse X")* Xsensitive);
         Move();
-        Dash();
+        if (wallrunning) speed = wallrunspeed;
+        else speed = wallrunspeed / 2;
     }
 
     private void FixedUpdate()
@@ -57,13 +59,6 @@ public class CharacterMove : MonoBehaviour
     }
 
 
-    void Dash()
-    {
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            rb.AddForce(transform.forward * 10000f, ForceMode.Impulse);
-        }
-    }
 
     void Jump()
     {
@@ -71,11 +66,18 @@ public class CharacterMove : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Space) && !isJumping)
             {
-                newvelocity.y = jumpspeed;
+                rb.AddForce(transform.up * jumpspeed, ForceMode.Impulse);
                 isJumping = true;
-                Debug.Log("jump");
+                
             }
         }
+        else if (wallrunning)
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                //newvelocity.y = jumpspeed;
+                rb.AddForce(transform.up * jumpspeed, ForceMode.Impulse);
+                isJumping = true;
+            }
     }
 
     public float LimitXAngle(float angle , float min ,float max)
