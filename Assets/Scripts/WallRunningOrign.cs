@@ -121,7 +121,7 @@ public class WallRunningOrign : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            rb.AddForce(-wallNormal * 10000 + Vector3.up * 100f, ForceMode.Impulse);
+            rb.AddForce(-wallNormal * 100 + Vector3.up * 100f, ForceMode.Impulse);
         }
         // upwards/downwards force
         if (upwardsRunning)
