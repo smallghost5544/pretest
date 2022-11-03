@@ -11,6 +11,7 @@ public class WallRunningOrign : MonoBehaviour
     public float wallClimbSpeed;
     public float maxWallRunTime;
     private float wallRunTimer;
+    public float wallrotate = 15f;
 
     [Header("Input")]
     public KeyCode upwardsRunKey = KeyCode.LeftShift;
@@ -30,21 +31,32 @@ public class WallRunningOrign : MonoBehaviour
 
     [Header("References")]
     public Transform orientation;
-    //private CharacterMove pm;
-    private PlayerMovementTutorial pm;
-    private Rigidbody rb;
+    public GameObject rotatecam;
+    public CharacterMove pm;
+    //private PlayerMovementTutorial pm;
+    public Rigidbody rb;
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        //rb = GetComponent<Rigidbody>();
         //pm = GetComponent<CharacterMove>();
-        pm = GetComponent<PlayerMovementTutorial>();
+        //pm = GetComponent<PlayerMovementTutorial>();
     }
 
     private void Update()
     {
         CheckForWall();
         StateMachine();
+        if (Input.GetMouseButton(1)) Dash();
+        if (Input.GetKey(KeyCode.K))
+        {
+            rotatecam.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, 15f));
+        }
+        if (Input.GetKey(KeyCode.J))
+        {
+            rotatecam.transform.localRotation = Quaternion.identity;
+            rotatecam.transform.localPosition = new Vector3(0, 1.3f, 0.2f);
+        }
     }
 
     private void FixedUpdate()
@@ -74,7 +86,7 @@ public class WallRunningOrign : MonoBehaviour
         downwardsRunning = Input.GetKey(downwardsRunKey);
 
         // State 1 - Wallrunning
-        if((wallLeft || wallRight) && verticalInput > 0 && AboveGround())
+        if ((wallLeft || wallRight) && verticalInput > 0 && AboveGround())
         {
             if (!pm.wallrunning)
                 StartWallRun();
@@ -99,15 +111,18 @@ public class WallRunningOrign : MonoBehaviour
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
         Vector3 wallNormal = wallRight ? rightWallhit.normal : leftWallhit.normal;
-
         Vector3 wallForward = Vector3.Cross(wallNormal, transform.up);
 
         if ((orientation.forward - wallForward).magnitude > (orientation.forward - -wallForward).magnitude)
             wallForward = -wallForward;
 
         // forward force
-        rb.AddForce(wallForward * wallRunForce, ForceMode.Force);
+        rb.AddForce(wallForward * wallRunForce* Time.deltaTime, ForceMode.Force);
 
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            rb.AddForce(-wallNormal * 10000 + Vector3.up * 100f, ForceMode.Impulse);
+        }
         // upwards/downwards force
         if (upwardsRunning)
             rb.velocity = new Vector3(rb.velocity.x, wallClimbSpeed, rb.velocity.z);
@@ -119,9 +134,21 @@ public class WallRunningOrign : MonoBehaviour
             rb.AddForce(-wallNormal * 100, ForceMode.Force);
     }
 
+    private void Dash()
+    {
+        rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+        rb.AddForce((transform.forward * 10f), ForceMode.Impulse);
+    }
+
     private void StopWallRun()
     {
         pm.wallrunning = false;
         rb.useGravity = true;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.layer == 7)
+            pm.wallrunning = true;
     }
 }
