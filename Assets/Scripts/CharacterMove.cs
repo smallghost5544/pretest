@@ -28,9 +28,9 @@ public class CharacterMove : MonoBehaviour
     void Update()
     {
         transform.Rotate(Vector3.up * Input.GetAxis("Mouse X")* Xsensitive);
-        Move();
-        if (wallrunning) speed = wallrunspeed;
-        else speed = wallrunspeed / 2;
+        //Move();
+        //if (wallrunning) speed = wallrunspeed;
+        //else speed = wallrunspeed / 2;
     }
 
     private void FixedUpdate()

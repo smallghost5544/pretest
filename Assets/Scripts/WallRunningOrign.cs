@@ -30,13 +30,15 @@ public class WallRunningOrign : MonoBehaviour
 
     [Header("References")]
     public Transform orientation;
-    private CharacterMove pm;
+    //private CharacterMove pm;
+    private PlayerMovementTutorial pm;
     private Rigidbody rb;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        pm = GetComponent<CharacterMove>();
+        //pm = GetComponent<CharacterMove>();
+        pm = GetComponent<PlayerMovementTutorial>();
     }
 
     private void Update()
