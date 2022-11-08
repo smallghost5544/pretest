@@ -12,8 +12,10 @@ public class WallRunningOrign : MonoBehaviour
     public float maxWallRunTime;
     private float wallRunTimer;
     public float wallrotate = 15f;
+
+    [Header("exiting wall")]
     bool exitingWall;
-    float exitWalltime = 0.2f;
+    public float exitWalltime = 0.2f;
     float exitwalltimer;
 
     [Header("Jump")]
@@ -56,13 +58,13 @@ public class WallRunningOrign : MonoBehaviour
         CheckForWall();
         StateMachine();
         if (Input.GetMouseButton(1)) Dash();
-        if (inwalljump)
-        {
-            transform.position = Vector3.Lerp(transform.position, forcetoApply, Time.deltaTime );
-            Debug.Log("Lerp");
-            if (transform.position.magnitude - forcetoApply.magnitude < 0.5f)
-                inwalljump = false;
-        }
+        //if (inwalljump)
+        //{
+        //    transform.position = Vector3.Lerp(transform.position, forcetoApply, Time.deltaTime );
+        //    Debug.Log("Lerp");
+        //    if (transform.position.magnitude - forcetoApply.magnitude < 0.5f)
+        //        inwalljump = false;
+        //}
 
     }
 
@@ -106,8 +108,8 @@ public class WallRunningOrign : MonoBehaviour
         else if (exitingWall)
         {
             if (pm.wallrunning) StopWallRun();
-            if (exitWalltime > 0) exitWalltime -= Time.deltaTime;
-            if (exitWalltime < 0) exitingWall= false;
+            if (exitwalltimer > 0) exitwalltimer -= Time.deltaTime;
+            if (exitwalltimer < 0) exitingWall= false;
         }
 
         // State 3 - None
@@ -152,9 +154,9 @@ public class WallRunningOrign : MonoBehaviour
         exitingWall = true;
         exitwalltimer = exitWalltime;
         Vector3 wallnormal = wallRight ? rightWallhit.normal : leftWallhit.normal; //success
-        forcetoApply = transform.up * walljumpforce + wallnormal * walljumpslideforce;
+        forcetoApply = Vector3.up * walljumpforce + wallnormal * walljumpslideforce;
         //rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-        //rb.AddForce(forcetoApply *Time.deltaTime, ForceMode.Impulse);
+        rb.AddForce(forcetoApply *Time.deltaTime, ForceMode.VelocityChange);
     }
 
 
