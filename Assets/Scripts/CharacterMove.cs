@@ -39,6 +39,14 @@ public class CharacterMove : MonoBehaviour
     private void FixedUpdate()
     {
         //Move();
+        if (rb.velocity.y < 0)
+        {
+            rb.velocity += Vector3.up * Physics.gravity.y * 2f * Time.deltaTime;
+        }
+        else if (rb.velocity.y > 0)
+        {
+            rb.velocity += Vector3.up * Physics.gravity.y * 1.5f * Time.deltaTime;
+        }
     }
     private void LateUpdate()
     {
@@ -65,11 +73,11 @@ public class CharacterMove : MonoBehaviour
 
     void Jump()
     {
-        if (isGround)
+        if (isGround && !wallrunning)
         {
             if (Input.GetKeyDown(KeyCode.Space) && !isJumping)
             {
-                rb.AddForce(transform.up * jumpspeed, ForceMode.Impulse);
+                rb.AddForce(transform.up * jumpspeed , ForceMode.VelocityChange);
                 isJumping = true;
             }
         }
