@@ -8,21 +8,28 @@ public class Dashing : MonoBehaviour
     public Transform orientation;
     public Transform playercam;
     public PlayerCam cam;
+    [Header("衝刺時FOV")]
     public float dashFov;
     private Rigidbody rb;
     private PlayerMovementAdvanced pm;
 
     public float dashForce;
     public float dashUpwardForce;
+    [Header("限制向上衝刺動力")]
     public float maxDashYspeed;
+    [Header("衝刺持續時間")]
     public float dashDuration;
-
+    [Header("冷卻時間")]
     public float dashCD;
     private float dashCDtimer;
 
+    [Header("是否依照鏡頭方位衝刺")]
     public bool UsingCameraForward = true;
+    [Header("允許各方向鍵衝刺")]
     public bool allowAllDirections = true;
+    [Header("忽略重力")]
     public bool disableGravity = false;
+    [Header("衝刺前速率歸0")]
     public bool resetVelocity = true;
 
     private Vector3 delayForcetoApply;

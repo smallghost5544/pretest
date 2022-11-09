@@ -25,6 +25,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
 
     [Header("Jumping")]
     public float jumpForce;
+    [Header("¸õÅD§N«o")]
     public float jumpCooldown;
     public float airMultiplier;
     bool readyToJump;
