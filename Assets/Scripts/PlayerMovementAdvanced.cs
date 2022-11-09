@@ -12,6 +12,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
     public float walkSpeed;
     public float slideSpeed;
     public float wallrunSpeed;
+    [Header("落下加成速度")]
     public float gravityMultiplier = 1.6f;
     public float speedIncreaseMultiplier;
     public float slopeIncreaseMultiplier;
@@ -233,12 +234,10 @@ public class PlayerMovementAdvanced : MonoBehaviour
             if (rb.velocity.magnitude > moveSpeed)
                 rb.velocity = rb.velocity.normalized * moveSpeed;
         }
-
         // limiting speed on ground or in air
         else
         {
             Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-
             // limit velocity if needed
             if (flatVel.magnitude > moveSpeed)
             {
@@ -251,7 +250,6 @@ public class PlayerMovementAdvanced : MonoBehaviour
     private void Jump()
     {
         exitingSlope = true;
-
         // reset y velocity
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
@@ -260,18 +258,16 @@ public class PlayerMovementAdvanced : MonoBehaviour
     private void ResetJump()
     {
         readyToJump = true;
-
         exitingSlope = false;
     }
 
-    public bool OnSlope()
+    public bool OnSlope() //滑鏟判定
     {
         if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight * 0.5f + 0.3f))
         {
             float angle = Vector3.Angle(Vector3.up, slopeHit.normal);
             return angle < maxSlopeAngle && angle != 0;
         }
-
         return false;
     }
 

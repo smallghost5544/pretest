@@ -4,8 +4,10 @@ using UnityEngine;
 using DG.Tweening;
 
 public class PlayerCam : MonoBehaviour
-{
+{   
+    [Header("左右靈敏度")]
     public float sensX;
+    [Header("上下靈敏度")]
     public float sensY;
 
     public Transform orientation;

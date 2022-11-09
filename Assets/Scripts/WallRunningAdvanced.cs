@@ -5,10 +5,14 @@ using UnityEngine;
 public class WallRunningAdvanced : MonoBehaviour
 {
     [Header("Wallrunning")]
+    [Header("物件標籤")]
     public LayerMask whatIsWall;
     public LayerMask whatIsGround;
+
     public float wallRunForce;
+    [Header("滑牆向上力道")]
     public float wallClimbSpeed;
+    [Header("最大滑牆時間")]
     public float maxWallRunTime;
     private float wallRunTimer;
     [Header("蹬牆力道")]
@@ -22,6 +26,7 @@ public class WallRunningAdvanced : MonoBehaviour
 
     [Header("Detection")]
     public float wallCheckDistance;
+    [Header("滑牆最小離地距離")]
     public float minJumpHeight;
     private RaycastHit leftWallhit;
     private RaycastHit rightWallhit;
@@ -171,9 +176,8 @@ public class WallRunningAdvanced : MonoBehaviour
 
         Vector3 wallNormal = wallRight ? rightWallhit.normal : leftWallhit.normal;
         var tangent = (orientation.forward + wallNormal).normalized; 
-        //Vector3 forceToApply = transform.up * wallJumpUpForce + wallNormal * wallJumpSideForce;
+
         Vector3 forceToApply = transform.up * wallJumpUpForce + tangent * wallJumpSideForce;
-        Debug.Log(tangent);
         // reset y velocity and add force
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
         rb.AddForce(forceToApply, ForceMode.Impulse);
