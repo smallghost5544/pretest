@@ -8,10 +8,14 @@ public class PlayerMovementAdvanced : MonoBehaviour
     private float moveSpeed;
     private float desiredMoveSpeed;
     private float lastDesiredMoveSpeed;
+    private MovementState lastState;
+    private bool keepMomentum;
     [Header("Movement")]
     public float walkSpeed;
     public float slideSpeed;
     public float wallrunSpeed;
+    public float dashSpeed;
+    public float maxYspeed;
     [Header("落下加成速度")]
     public float gravityMultiplier = 1.6f;
     public float speedIncreaseMultiplier;
@@ -44,6 +48,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
     private RaycastHit slopeHit;
     private bool exitingSlope;
 
+    public bool Dashing;
     private WallRunningAdvanced wr;
     public Transform orientation;
 
@@ -61,6 +66,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
         wallrunning,
         crouching,
         sliding,
+        dashing,
         air
     }
 
@@ -84,6 +90,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
         SpeedControl();
         StateHandler();
         // handle drag
+        //if(state == MovementState.walking || state == MovementState.crouching)
         if (grounded)
             rb.drag = groundDrag;
         else
@@ -126,8 +133,13 @@ public class PlayerMovementAdvanced : MonoBehaviour
 
     private void StateHandler()
     {
+        if (Dashing)
+        {
+            state = MovementState.dashing;
+            desiredMoveSpeed = dashSpeed;
+        }
         // Mode - Wallrunning
-        if (wallrunning)
+        else if (wallrunning)
         {
             state = MovementState.wallrunning;
             desiredMoveSpeed = wallrunSpeed;
@@ -245,6 +257,9 @@ public class PlayerMovementAdvanced : MonoBehaviour
                 rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
             }
         }
+
+        if (maxYspeed != 0 && rb.velocity.y > maxYspeed)
+            rb.velocity = new Vector3(rb.velocity.x, maxYspeed, rb.velocity.z);
     }
 
     private void Jump()
