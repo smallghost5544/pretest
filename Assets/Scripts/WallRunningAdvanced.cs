@@ -44,6 +44,7 @@ public class WallRunningAdvanced : MonoBehaviour
 
     [Header("References")]
     public Transform orientation;
+    public Transform camtrans;
     public PlayerCam cam;
     private PlayerMovementAdvanced pm;
     private Rigidbody rb;
@@ -63,7 +64,9 @@ public class WallRunningAdvanced : MonoBehaviour
     private void FixedUpdate()
     {
         if (pm.wallrunning)
+        {
             WallRunningMovement();
+        }
     }
 
     private void CheckForWall()
@@ -81,10 +84,11 @@ public class WallRunningAdvanced : MonoBehaviour
     {
         // Getting Inputs
         horizontalInput = Input.GetAxisRaw("Horizontal");
-        verticalInput = Input.GetAxisRaw("Vertical");
+        //verticalInput = Input.GetAxisRaw("Vertical");
+        verticalInput = 1;
 
         // State 1 - Wallrunning
-        if((wallLeft || wallRight) && verticalInput > 0 && AboveGround() && !exitingWall)
+        if ((wallLeft || wallRight) && verticalInput > 0 && AboveGround() && !exitingWall)
         {
             if (!pm.wallrunning)
                 StartWallRun();
@@ -140,14 +144,12 @@ public class WallRunningAdvanced : MonoBehaviour
     private void WallRunningMovement()
     {
         rb.useGravity = useGravity;
-
         Vector3 wallNormal = wallRight ? rightWallhit.normal : leftWallhit.normal;
 
         Vector3 wallForward = Vector3.Cross(wallNormal, transform.up);
 
         if ((orientation.forward - wallForward).magnitude > (orientation.forward - -wallForward).magnitude)
             wallForward = -wallForward;
-
         // forward force
         rb.AddForce(wallForward * wallRunForce, ForceMode.Force);
 
@@ -165,7 +167,7 @@ public class WallRunningAdvanced : MonoBehaviour
     {
         pm.wallrunning = false;
         // reset camera effects
-        cam.DoTilt(0f);
+        cam.DoTiltSlow(0f);
     }
 
     private void WallJump()

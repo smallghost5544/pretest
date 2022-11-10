@@ -53,8 +53,8 @@ public class PlayerMovementAdvanced : MonoBehaviour
     private WallRunningAdvanced wr;
     public Transform orientation;
 
-    float horizontalInput;
-    float verticalInput;
+    public float horizontalInput;
+    public float verticalInput;
 
     Vector3 moveDirection;
 
@@ -106,8 +106,9 @@ public class PlayerMovementAdvanced : MonoBehaviour
 
     private void MyInput()
     {
-        horizontalInput = Input.GetAxisRaw("Horizontal");
-        verticalInput = Input.GetAxisRaw("Vertical");
+
+            horizontalInput = Input.GetAxisRaw("Horizontal");
+            verticalInput = Input.GetAxisRaw("Vertical");
 
         // when to jump
         if (Input.GetKey(jumpKey) && readyToJump && grounded)
@@ -177,8 +178,6 @@ public class PlayerMovementAdvanced : MonoBehaviour
         {
             StopAllCoroutines();
             StartCoroutine(SmoothlyLerpMoveSpeed());
-
-            print("Lerp Started!");
         }
         else
         {
@@ -217,7 +216,9 @@ public class PlayerMovementAdvanced : MonoBehaviour
     private void MovePlayer()
     {
         // calculate movement direction
-        moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
+        if (!wallrunning)
+            moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
+        else  moveDirection = orientation.forward + orientation.right ;
 
         // on slope
         if (OnSlope() && !exitingSlope && !wr.exitingWall)
@@ -236,7 +237,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
 
         // turn gravity off while on slope
-        if(!wallrunning) rb.useGravity = !OnSlope();
+        if (!wallrunning) rb.useGravity = !OnSlope();
     }
 
     private void SpeedControl()

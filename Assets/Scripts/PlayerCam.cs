@@ -38,6 +38,13 @@ public class PlayerCam : MonoBehaviour
         orientation.rotation = Quaternion.Euler(0, yRotation, 0);
     }
 
+    public void walljumpRotate(Vector3 forward , Vector3 wallnormal)
+    {
+        var rotate = Vector3.Angle(forward, wallnormal);
+        Debug.Log(rotate);
+        orientation.rotation = Quaternion.Euler(0, rotate, 0);
+    }
+
     public void DoFov(float endValue)
     {
         GetComponent<Camera>().DOFieldOfView(endValue, 0.25f);
@@ -45,6 +52,10 @@ public class PlayerCam : MonoBehaviour
 
     public void DoTilt(float zTilt)
     {
-        transform.DOLocalRotate(new Vector3(0, 0, zTilt), 1.5f);
+        transform.DOLocalRotate(new Vector3(0, 0, zTilt), 0.25f);
+    }
+    public void DoTiltSlow(float zTilt)
+    {
+        transform.DOLocalRotate(new Vector3(0, 0, zTilt), 0.5f);
     }
 }
