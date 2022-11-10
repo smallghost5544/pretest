@@ -21,6 +21,7 @@ public class PlayerCam : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        orientation = GameObject.Find("Orientation").transform;
     }
 
     private void Update()

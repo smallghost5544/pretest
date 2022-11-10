@@ -53,6 +53,7 @@ public class WallRunningAdvanced : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         pm = GetComponent<PlayerMovementAdvanced>();
+        cam = GameObject.Find("PlayerCam").GetComponent<PlayerCam>();
     }
 
     private void Update()

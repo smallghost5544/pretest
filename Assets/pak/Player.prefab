@@ -55,7 +55,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2957452680231539645}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.99, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -90,7 +90,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2957452680623718874}
-  m_LocalRotation: {x: -0, y: 0.032450654, z: -0, w: 0.9994734}
+  m_LocalRotation: {x: 0, y: 0.032448705, z: 0, w: 0.9994734}
   m_LocalPosition: {x: 0, y: 1.04, z: 46}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -177,6 +177,9 @@ MonoBehaviour:
   maxSlopeAngle: 40
   Dashing: 0
   orientation: {fileID: 2957452680231539644}
+  horizontalInput: 0
+  verticalInput: 0
+  ShowInfo: 0
   state: 0
   sliding: 0
   crouching: 0
@@ -206,12 +209,13 @@ MonoBehaviour:
   wallJumpSideForce: 120
   jumpKey: 32
   wallCheckDistance: 0.7
-  minJumpHeight: 2
+  minJumpHeight: 1.2
   exitingWall: 0
   exitWallTime: 0.4
   useGravity: 1
-  gravityCounterForce: 20
+  gravityCounterForce: 40
   orientation: {fileID: 2957452680231539644}
+  camtrans: {fileID: 0}
   cam: {fileID: 0}
 --- !u!114 &2957452680623718886
 MonoBehaviour:

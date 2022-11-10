@@ -39,6 +39,8 @@ public class Dashing : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         pm = GetComponent<PlayerMovementAdvanced>();
+        cam = GameObject.Find("PlayerCam").GetComponent<PlayerCam>();
+        playercam = GameObject.Find("PlayerCam").transform;
     }
 
     // Update is called once per frame
