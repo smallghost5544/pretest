@@ -45,6 +45,8 @@ public class Sliding : MonoBehaviour
 
         if (Input.GetKeyUp(slideKey) && pm.sliding)
             StopSlide();
+        if (Input.GetKeyUp(slideKey) && pm.crouching)
+            playerObj.localScale = new Vector3(playerObj.localScale.x, startYScale, playerObj.localScale.z);
     }
 
     private void FixedUpdate()
@@ -90,7 +92,6 @@ public class Sliding : MonoBehaviour
     private void StopSlide()
     {
         pm.sliding = false;
-
-        playerObj.localScale = new Vector3(playerObj.localScale.x, startYScale, playerObj.localScale.z);
+        pm.crouching = true;  
     }
 }

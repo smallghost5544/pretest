@@ -8,8 +8,6 @@ public class PlayerMovementAdvanced : MonoBehaviour
     private float moveSpeed;
     private float desiredMoveSpeed;
     private float lastDesiredMoveSpeed;
-    private MovementState lastState;
-    private bool keepMomentum;
     [Header("Movement")]
     public float walkSpeed;
     public float slideSpeed;
@@ -55,7 +53,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
 
     public float horizontalInput;
     public float verticalInput;
-
+    public bool ShowInfo;
     Vector3 moveDirection;
 
     Rigidbody rb;
@@ -106,7 +104,6 @@ public class PlayerMovementAdvanced : MonoBehaviour
 
     private void MyInput()
     {
-
             horizontalInput = Input.GetAxisRaw("Horizontal");
             verticalInput = Input.GetAxisRaw("Vertical");
 
@@ -139,12 +136,14 @@ public class PlayerMovementAdvanced : MonoBehaviour
         {
             state = MovementState.dashing;
             desiredMoveSpeed = dashSpeed;
+            if (ShowInfo) Debug.Log("dashing");
         }
         // Mode - Wallrunning
         else if (wallrunning)
         {
             state = MovementState.wallrunning;
             desiredMoveSpeed = wallrunSpeed;
+            if (ShowInfo) Debug.Log("wallrunning");
         }
         // Mode - Sliding
         else if (sliding)
@@ -153,12 +152,14 @@ public class PlayerMovementAdvanced : MonoBehaviour
             // increase speed by one every second
             if (OnSlope() && rb.velocity.y < 0.1f)
                 desiredMoveSpeed = slideSpeed;
+            if (ShowInfo) Debug.Log("sliding");
         }
         // Mode - Crouching
         else if (crouching)
         {
             state = MovementState.crouching;
             desiredMoveSpeed = crouchSpeed;
+            if (ShowInfo) Debug.Log("crouching");
         }
 
         // Mode - Walking
@@ -166,6 +167,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
         {
             state = MovementState.walking;
             desiredMoveSpeed = walkSpeed;
+            if (ShowInfo) Debug.Log("walking");
         }
         // Mode - Air
         else
@@ -216,10 +218,7 @@ public class PlayerMovementAdvanced : MonoBehaviour
     private void MovePlayer()
     {
         // calculate movement direction
-        if (!wallrunning)
             moveDirection = orientation.forward * verticalInput + orientation.right * horizontalInput;
-        else  moveDirection = orientation.forward + orientation.right ;
-
         // on slope
         if (OnSlope() && !exitingSlope && !wr.exitingWall)
         {

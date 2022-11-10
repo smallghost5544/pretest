@@ -34,7 +34,7 @@ public class Dashing : MonoBehaviour
 
     private Vector3 delayForcetoApply;
     public KeyCode dashkey = KeyCode.LeftShift;
-    // Start is called before the first frame update
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -52,19 +52,11 @@ public class Dashing : MonoBehaviour
     {
         if (dashCDtimer > 0) return;
         else dashCDtimer = dashCD;
-        pm.Dashing = true;
-        pm.maxYspeed = maxDashYspeed;
+        SetState();
         cam.DoFov(dashFov);
+        SetFinalForce();
 
-        Transform forwardT;
-        if (UsingCameraForward) forwardT = playercam;
-        else forwardT = orientation;
-
-
-        var direction = GetDirection(forwardT);
-        var forceApply = direction * dashForce + orientation.up * dashUpwardForce;
         if (disableGravity) rb.useGravity = false;
-        delayForcetoApply = forceApply;
         Invoke(nameof(DelayDashForce), 0.025f);
         Invoke(nameof(ResetDash), dashDuration);
     }
@@ -92,5 +84,20 @@ public class Dashing : MonoBehaviour
         else direction = forwardT.forward;
         if(v==0 && h==0) direction = forwardT.forward;
         return direction.normalized;
+    }
+
+    private void SetState()
+    { 
+        pm.Dashing = true;
+        pm.maxYspeed = maxDashYspeed;
+    }
+
+    private void SetFinalForce()
+    {
+        Transform forwardT;
+        if (UsingCameraForward) forwardT = playercam;
+        else forwardT = orientation;
+        var direction = GetDirection(forwardT);
+        delayForcetoApply = direction * dashForce + orientation.up * dashUpwardForce;
     }
 }

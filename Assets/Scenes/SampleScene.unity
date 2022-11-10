@@ -8557,6 +8557,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2957452680231539644, guid: 7c4c9f73a18f86f4aa18bf9913dea615, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.99
+      objectReference: {fileID: 0}
     - target: {fileID: 2957452680623718873, guid: 7c4c9f73a18f86f4aa18bf9913dea615, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -8605,6 +8609,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 2957452680623718883, guid: 7c4c9f73a18f86f4aa18bf9913dea615, type: 3}
+      propertyPath: ShowInfo
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2957452680623718884, guid: 7c4c9f73a18f86f4aa18bf9913dea615, type: 3}
       propertyPath: cam
       value: 
@@ -8613,10 +8621,18 @@ PrefabInstance:
       propertyPath: minJumpHeight
       value: 1.2
       objectReference: {fileID: 0}
+    - target: {fileID: 2957452680623718884, guid: 7c4c9f73a18f86f4aa18bf9913dea615, type: 3}
+      propertyPath: gravityCounterForce
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 2957452680623718889, guid: 7c4c9f73a18f86f4aa18bf9913dea615, type: 3}
       propertyPath: cam
       value: 
       objectReference: {fileID: 5594631240726530654}
+    - target: {fileID: 2957452680623718889, guid: 7c4c9f73a18f86f4aa18bf9913dea615, type: 3}
+      propertyPath: ShowInfo
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2957452680623718889, guid: 7c4c9f73a18f86f4aa18bf9913dea615, type: 3}
       propertyPath: playercam
       value: 
